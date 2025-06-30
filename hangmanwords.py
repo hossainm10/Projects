@@ -1,0 +1,14 @@
+word_list = [
+    "programming",
+    "python",
+    "challenge",
+    "hangman",
+    "learning",
+    "development",
+    "code",
+    "project",
+    "example",
+    "solution",
+    "variable",
+    "function"
+]
