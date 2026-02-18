@@ -1,0 +1,48 @@
+gcc -Wall -Wextra -O2 -std=gnu++11 -Iheaders -D_DEFAULT_SOURCE -c main.c -o main.o
+cc1: warning: command-line option ‘-std=gnu++11’ is valid for C++/ObjC++ but not for C
+In file included from main.c:1:
+headers/capture.h:11:21: error: ‘PCAP_ERRBUFF_SIZE’ undeclared here (not in a function); did you mean ‘PCAP_ERRBUF_SIZE’?
+   11 |         char errbuf[PCAP_ERRBUFF_SIZE];
+      |                     ^~~~~~~~~~~~~~~~~
+      |                     PCAP_ERRBUF_SIZE
+headers/capture.h:17:44: error: expected declaration specifiers or ‘...’ before ‘packet_buffer_t’
+   17 | int capture_packet(capture_context_t *ctx, packet_buffer_t *buffer);
+      |                                            ^~~~~~~~~~~~~~~
+headers/capture.h:18:59: error: expected declaration specifiers or ‘...’ before ‘packet_buffer_t’
+   18 | int capture_start(capture_context_t *ctx, void(*callback)(packet_buffer_t *),size_t max_packets);
+      |                                                           ^~~~~~~~~~~~~~~
+headers/capture.h:18:78: error: expected ‘;’, ‘,’ or ‘)’ before ‘size_t’
+   18 | int capture_start(capture_context_t *ctx, void(*callback)(packet_buffer_t *),size_t max_packets);
+      |                                                                              ^~~~~~
+In file included from main.c:2:
+headers/parser.h:11:18: error: expected declaration specifiers or ‘...’ before ‘packet_buffer_t’
+   11 | int parse_packet(packet_buffer_t *buffer, packet_info_t *info);
+      |                  ^~~~~~~~~~~~~~~
+In file included from main.c:3:
+headers/display.h:6:25: error: expected declaration specifiers or ‘...’ before ‘packet_buffer_t’
+    6 | void display_packet_raw(packet_buffer_t *buffer);
+      |                         ^~~~~~~~~~~~~~~
+headers/display.h:9:26: error: expected declaration specifiers or ‘...’ before ‘packet_buffer_t’
+    9 | void display_packet_full(packet_buffer_t *buffer, packet_info_t *info, size_t packet_num);
+      |                          ^~~~~~~~~~~~~~~
+headers/display.h:10:1: warning: data definition has no type or storage class
+   10 | display_statistics(size_t total_packets, size_t tcp_count, size_t udp_count, size_t other_count);
+      | ^~~~~~~~~~~~~~~~~~
+headers/display.h:10:1: warning: type defaults to ‘int’ in declaration of ‘display_statistics’ [-Wimplicit-int]
+main.c:20:22: error: expected declaration specifiers or ‘...’ before ‘packet_buffer_t’
+   20 | void packet_callback(packet_buffer_t *buffer){
+      |                      ^~~~~~~~~~~~~~~
+main.c: In function ‘print_usage’:
+main.c:57:45: warning: unknown escape sequence: '\040'
+   57 |         printf("  %s eth0 50 \ 'port 443'\n", program_name);
+      |                                             ^
+main.c: In function ‘main’:
+main.c:107:23: warning: implicit declaration of function ‘capture_start’; did you mean ‘capture_stop’? [-Wimplicit-function-declaration]
+  107 |         int captured= capture_start(&global_ctx, &packet_callback, max_packets);
+      |                       ^~~~~~~~~~~~~
+      |                       capture_stop
+main.c:107:51: error: ‘packet_callback’ undeclared (first use in this function)
+  107 |         int captured= capture_start(&global_ctx, &packet_callback, max_packets);
+      |                                                   ^~~~~~~~~~~~~~~
+main.c:107:51: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Makefile:20: main.o] Error 1
