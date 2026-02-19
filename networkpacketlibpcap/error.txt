@@ -1,0 +1,44 @@
+gcc -Wall -Wextra -O2 -std=gnu11 -Iheaders -D_DEFAULT_SOURCE   -c -o src/parser.o src/parser.c
+src/parser.c: In function ‘parse_ethernet’:
+src/parser.c:2:29: warning: unused parameter ‘data’ [-Wunused-parameter]
+    2 | int parse_ethernet(uint8_t *data,size_t *offset){
+      |                    ~~~~~~~~~^~~~
+src/parser.c: In function ‘parse_ip’:
+src/parser.c:9:48: error: invalid operands to binary + (have ‘uint8_t *’ {aka ‘unsigned char *’} and ‘size_t *’ {aka ‘long unsigned int *’})
+    9 |         struct iphdr *ip= (struct iphdr *)(data+offset);
+      |                                                ^
+src/parser.c: At top level:
+src/parser.c:30:5: error: conflicting types for ‘parse_tcp’; have ‘int(uint8_t *, size_t,  packet_info_t *)’ {aka ‘int(unsigned char *, long unsigned int,  packet_info_t *)’}
+   30 | int parse_tcp(uint8_t *data, size_t offset, packet_info_t *info){
+      |     ^~~~~~~~~
+In file included from src/parser.c:1:
+headers/parser.h:14:5: note: previous declaration of ‘parse_tcp’ with type ‘int(uint8_t *, size_t *, packet_info_t *)’ {aka ‘int(unsigned char *, long unsigned int *, packet_info_t *)’}
+   14 | int parse_tcp(uint8_t *data, size_t *offset, packet_info_t *info);
+      |     ^~~~~~~~~
+src/parser.c:41:5: error: conflicting types for ‘parse_udp’; have ‘int(uint8_t *, size_t,  packet_info_t *)’ {aka ‘int(unsigned char *, long unsigned int,  packet_info_t *)’}
+   41 | int parse_udp(uint8_t *data, size_t offset, packet_info_t *info){
+      |     ^~~~~~~~~
+headers/parser.h:15:5: note: previous declaration of ‘parse_udp’ with type ‘int(uint8_t *, size_t *, packet_info_t *)’ {aka ‘int(unsigned char *, long unsigned int *, packet_info_t *)’}
+   15 | int parse_udp(uint8_t *data, size_t *offset, packet_info_t *info);
+      |     ^~~~~~~~~
+src/parser.c: In function ‘parse_packet’:
+src/parser.c:69:35: warning: passing argument 2 of ‘parse_ip’ makes pointer from integer without a cast [-Wint-conversion]
+   69 |         if(parse_ip(buffer->data, offset, info)<0){
+      |                                   ^~~~~~
+      |                                   |
+      |                                   size_t {aka long unsigned int}
+src/parser.c:8:37: note: expected ‘size_t *’ {aka ‘long unsigned int *’} but argument is of type ‘size_t’ {aka ‘long unsigned int’}
+    8 | int parse_ip(uint8_t *data, size_t *offset, packet_info_t *info){
+      |                             ~~~~~~~~^~~~~~
+src/parser.c: In function ‘get_protocol_name’:
+src/parser.c:104:9: warning: implicit declaration of function ‘swtich’ [-Wimplicit-function-declaration]
+  104 |         swtich(protocol){
+      |         ^~~~~~
+src/parser.c:104:25: error: expected ‘;’ before ‘{’ token
+  104 |         swtich(protocol){
+      |                         ^
+      |                         ;
+src/parser.c:115:1: warning: control reaches end of non-void function [-Wreturn-type]
+  115 | }
+      | ^
+make: *** [<builtin>: src/parser.o] Error 1
